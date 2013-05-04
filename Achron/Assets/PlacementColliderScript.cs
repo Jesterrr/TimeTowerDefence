@@ -12,6 +12,7 @@ public class PlacementColliderScript : MonoBehaviour {
 	private bool blocked = false;
 	private bool hidden = false;
 	private bool dragged = true;
+	private bool active = true;
 	
 	private List<GameObject> collidedWith;
 	
@@ -51,14 +52,14 @@ public class PlacementColliderScript : MonoBehaviour {
 		}
 	}
 	
-	public void Show () {
-		this.renderer.enabled = true;
+	public void Show () {		
 		hidden = false;
+		UpdateVisibility();
 	}
 	
-	public void Hide () {
-		this.renderer.enabled = false;
+	public void Hide () {		
 		hidden = true;
+		UpdateVisibility();
 	}
 	
 	public void Blocked () {
@@ -97,5 +98,18 @@ public class PlacementColliderScript : MonoBehaviour {
 		UnblockOthers();
 		Destroy(this.gameObject);
 	}
-		
+	
+	public void SetActive(bool newActive){
+		active = newActive;
+		UpdateVisibility();
+	}
+	
+	public void UpdateVisibility() {
+		if (active && !hidden) {
+			this.renderer.enabled = true;
+		}
+		else {
+			this.renderer.enabled = false;
+		}	
+	}
 }

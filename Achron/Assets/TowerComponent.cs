@@ -12,16 +12,19 @@ public class TowerComponent : MonoBehaviour {
 	public float cost;
 	public bool homing;
 	public float collisionRadius;
+	public GameObject projectilePrefab;	
 	
-	public GameObject projectilePrefab;
-	
+	private GameObject placementCollider;		
 	private float reloadTime = 0;
 	private CreepControllerComponent creepController;
+	private GameObject placementColliderResource = Resources.Load("PlacementCollider") as GameObject;
 	
 	// Use this for initialization
 	void Start () {
 		creepController = GameObject.Find("Creeps").GetComponent("CreepControllerComponent") as CreepControllerComponent;
-		//projectilePrefab = (GameObject)Resources.Load(projectileType);
+
+		placementCollider = (GameObject)Instantiate(placementColliderResource, this.transform.position, Quaternion.identity);
+		placementCollider.GetComponent<PlacementColliderScript>().SetRadius(collisionRadius);
 	}
 	
 	// Update is called once per frame
@@ -74,6 +77,8 @@ public class TowerComponent : MonoBehaviour {
 	}
 	
 	public void Delete() {
-		Destroy(this.gameObject);
+		Destroy (placementCollider);
+		Destroy (this.gameObject);
 	}
+	
 }

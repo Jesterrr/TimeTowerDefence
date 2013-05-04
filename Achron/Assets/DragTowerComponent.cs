@@ -54,6 +54,7 @@ public class DragTowerComponent : MonoBehaviour {
 		else {
 			this.placementCollider.GetComponent<PlacementColliderScript>().Delete();
 		}
+		Destroy (placementCollider);
 		Destroy (this.gameObject);
 		
 	}
